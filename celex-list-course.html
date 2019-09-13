@@ -6,8 +6,45 @@
       :host {
         display: block;
       }
+
+      .info-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .info-group div:not(.md) {
+        flex-grow: 1;
+      }
+
+      .info-group div.md {
+        flex-grow: 2;
+      }
+
+      .break {
+        flex-basis: 100%;
+        height: 0;
+      }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <div>
+      <div class="info-group">
+        <div>Idioma: {{group.course.name}}</div>
+        <div>Grado: {{group.grade.name}}</div>
+        <div>Horario: {{group.schedule}}</div>
+        <div class="break"></div>
+        <div>Profesor: {{group.teacher.name}}</div>
+        <div>Salón: {{group.classroom}}</div>
+        <div>Semestre: {{group.bimester}}</div>
+      </div>
+      <br/>
+      <div class="students">
+        <dom-repeat items="{{group.students}}">
+          <template>
+            <div>{{item.number}}. {{item.name}}</div>
+          </template>
+        </dom-repeat>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -23,11 +60,26 @@
       static get is() { return 'celex-list-course'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'celex-list-course'
+          data: {
+            type: Object,
+            observer: '_processData'
           }
         };
+      }
+      _processData (newValue, oldValue) {
+        if (newValue) {
+          this.group = this._prepareNewData(newValue);
+        }
+      }
+      _prepareNewData (newValue) {
+        const data = {...newValue};
+        if (data.students && data.students.length) {
+          data.students = data.students.map((student, index) => {
+            student.number = index+1;
+            return student;
+          });
+        }
+        return data;
       }
     }
 
