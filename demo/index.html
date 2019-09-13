@@ -22,9 +22,17 @@
       <h3>Basic celex-list-course demo</h3>
       <demo-snippet>
         <template>
-          <celex-list-course></celex-list-course>
+          <celex-list-course data="{{data}}"></celex-list-course>
         </template>
       </demo-snippet>
     </div>
+    <script>
+      import('./mock.js').then(module => {
+        setTimeout(() => {
+          const demo = document.querySelector('celex-list-course');
+          demo.data = module.dataMock;
+        }, 3000);
+      });
+    </script>
   </body>
 </html>
