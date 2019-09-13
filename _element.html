@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="celex-list-course">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `celex-list-course`
+     * Celex course list
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CelexListCourse extends Polymer.Element {
+      static get is() { return 'celex-list-course'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'celex-list-course'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(CelexListCourse.is, CelexListCourse);
+  </script>
+</dom-module>
